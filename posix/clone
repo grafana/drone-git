@@ -101,7 +101,7 @@ git_clone_retry(){
 		;;
 	*)
 		n=0
-		until [ "$n" -ge "${retries}" ]
+		until [ "$n" -gt "${retries}" ]
 		do
 			$1 && break
 			n=$((n+1)) 
