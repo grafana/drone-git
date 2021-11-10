@@ -89,13 +89,12 @@ esac
 
 git_clone_retry(){
 	retries="${PLUGIN_RETRIES:-0}"
-	echo "Cloning with ${retries} retries"
-
 	if [ -n "${retries##*[0-9]*}" ] || [ "${retries}" -lt 0 ]; then
-		echo "PLUGIN_RETRIES defined but is not a number from 1-9: ${retries}" >&2
+		echo "PLUGIN_RETRIES defined but is not a number: ${retries}" >&2
 		exit 1
 	fi
 
+	echo "Cloning with ${retries} retries"
 	n=0
 	until [ "$n" -gt "${retries}" ]; do
 		$1 && break
