@@ -10,6 +10,11 @@ on:
     paths:
       - "docker/Dockerfile.windows.1809"
       - ".github/workflows/build-windows-image.yml"
+
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   build-and-push:
     name: Push image
