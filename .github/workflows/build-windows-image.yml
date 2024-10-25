@@ -28,11 +28,6 @@ jobs:
           common_secrets: |
             DOCKERHUB_USERNAME=dockerhub-platform-productivity:username
             DOCKERHUB_TOKEN=dockerhub-platform-productivity:token
-    #   - name: Log in to Docker Hub
-    #     uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
-    #     with:
-    #       username: ${{ env.DOCKERHUB_USERNAME }}
-    #       password: ${{ env.DOCKERHUB_TOKEN }}
       - name: Generate tag
         id: generate_tag
         run: |
@@ -46,5 +41,5 @@ jobs:
           dockerfile: docker/Dockerfile.windows.1809
           username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ env.DOCKERHUB_TOKEN }}
-        #   pushImage: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+          pushImage: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
           platform: windows/amd64
