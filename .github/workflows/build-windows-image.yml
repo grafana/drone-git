@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   build-and-push:
-    name: Push image
+    name: Build and optionally push image
     runs-on: windows-2019
     steps:
       - name: Checkout
