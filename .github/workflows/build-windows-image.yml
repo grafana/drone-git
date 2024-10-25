@@ -1,0 +1,45 @@
+name: Build and Publish Windows Image
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "docker/Dockerfile.windows.1809"
+      - ".github/workflows/build-windows-image.yml"
+  pull_request:
+    paths:
+      - "docker/Dockerfile.windows.1809"
+      - ".github/workflows/build-windows-image.yml"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-and-push:
+    name: Build and optionally push image
+    runs-on: windows-2019
+    steps:
+      - name: Checkout
+        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+      - name: Get DockerHub credentials
+        uses: grafana/shared-workflows/actions/get-vault-secrets@main
+        with:
+          common_secrets: |
+            DOCKERHUB_USERNAME=dockerhub-platform-productivity:username
+            DOCKERHUB_TOKEN=dockerhub-platform-productivity:token
+      - name: Generate tag
+        id: generate_tag
+        run: |
+          echo "tag=$(date +%F)-windows-amd64" >> $ENV:GITHUB_OUTPUT
+      - name: Build and optionally push
+        uses: mr-smithers-excellent/docker-build-push@59523c638baec979a74fea99caa9e29d97e5963c # v6.4.0
+        with:
+          image: grafana/drone-git
+          tags: ${{ steps.generate_tag.outputs.tag }}
+          registry: docker.io
+          dockerfile: docker/Dockerfile.windows.1809
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ env.DOCKERHUB_TOKEN }}
+          pushImage: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+          platform: windows/amd64
