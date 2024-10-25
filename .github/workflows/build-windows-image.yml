@@ -46,5 +46,5 @@ jobs:
           dockerfile: docker/Dockerfile.windows.1809
           username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ env.DOCKERHUB_TOKEN }}
-          pushImage: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        #   pushImage: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
           platform: windows/amd64
