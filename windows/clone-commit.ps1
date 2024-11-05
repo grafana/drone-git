@@ -21,5 +21,5 @@ else {
     git fetch origin "+refs/heads/${Env:DRONE_COMMIT_BRANCH}:";
 }
 
-Write-Host "git checkout $Env:DRONE_COMMIT_SHA -f $Env:DRONE_COMMIT_BRANCH";
+Write-Host "git checkout $Env:DRONE_COMMIT_SHA -b $Env:DRONE_COMMIT_BRANCH";
 git checkout $Env:DRONE_COMMIT_SHA -b $Env:DRONE_COMMIT_BRANCH;
