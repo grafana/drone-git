@@ -6,10 +6,12 @@ on:
     paths:
       - "docker/Dockerfile.windows.1809"
       - ".github/workflows/build-windows-image.yml"
+      - "windows/**"
   pull_request:
     paths:
       - "docker/Dockerfile.windows.1809"
       - ".github/workflows/build-windows-image.yml"
+      - "windows/**"
 
 permissions:
   contents: read
